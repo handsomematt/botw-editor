@@ -9,7 +9,7 @@ namespace BotWFormatReader.Formats
     {
         public BYML(byte[] Data)
         {
-            EndianBinaryReader er = new EndianBinaryReader(new MemoryStream(Data), Endianness.BigEndian);
+            EndianBinaryReader er = new EndianBinaryReader(new MemoryStream(Data), Endian.Big);
             try
             {
                 Header = new BYMLHeader(er);
