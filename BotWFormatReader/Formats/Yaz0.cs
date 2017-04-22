@@ -4,84 +4,77 @@ using System.IO;
 namespace BotWFormatReader.Formats
 {
     /// <summary>
-    /// Compress and Decompress Yaz0 encoded files.
-    /// 
-    /// Port of thakis' yaz0dec.cpp and shevious' yaz0enc.cpp for C#. Minor code cleanup in 2015 by Lord Ned (@LordNed) but otherwise
-    /// unmodified versions of thakis' and shevious' work. 
+    /// Decompresses Yaz0-compressed data.
     /// </summary>
     public class Yaz0
     {
         /// <summary>
-        /// Decode the specified stream as a Yaz0 encoded file and return the decoded data as a MemoryStream.
+        /// Decompresses Yaz0-compressed contents from an input <see cref="Stream"/> and writes the output directly
+        /// to the output <see cref="MemoryStream"/>.
         /// Throws an <see cref="InvalidDataException"/> if the stream is not positioned to the start of a Yaz0 file.
         /// </summary>
-        /// <param name="stream">Stream to read data from.</param>
-        /// <returns>Decoded file as <see cref="MemoryStream"/></returns>
-        public static MemoryStream Decode(EndianBinaryReader stream)
+        /// <param name="input">The input <see cref="Stream"/> containing Yaz0-compressed data.</param>
+        /// <param name="output>The output <see cref="MemoryStream"/> to write decompressed data to.</param>
+        public static void Decompress(Stream input, MemoryStream output)
         {
-            if (stream.ReadUInt32() != 0x59617A30) // "Yaz0" Magic
-                throw new InvalidDataException("Invalid Magic, not a Yaz0 File");
-
-            int uncompressedSize = stream.ReadInt32();
-            stream.ReadBytes(8);
-
-            byte[] output = new byte[uncompressedSize];
-            int destPos = 0;
-
-            byte curCodeByte = 0;
-            uint validBitCount = 0;
-
-            while (destPos < uncompressedSize)
+            using (EndianBinaryReader reader = new EndianBinaryReader(input, Endian.Big))
+            using (EndianBinaryWriter writer = new EndianBinaryWriter(output, Endian.Big))
             {
-                // The codeByte specifies what to do for the next 8 steps. Read a new one if we've exhausted the current one.
-                if (validBitCount == 0)
+                if (reader.ReadUInt32() != 0x59617A30) // "Yaz0" Magic
+                    throw new InvalidDataException("Invalid Yaz0 header.");
+
+                uint decompressedSize = reader.ReadUInt32();
+                reader.BaseStream.Position += 8;
+
+                // Decompress the data.
+                int decompressedBytes = 0;
+                while (decompressedBytes < decompressedSize)
                 {
-                    curCodeByte = stream.ReadByte();
-                    validBitCount = 8;
-                }
-
-                if ((curCodeByte & 0x80) != 0)
-                {
-                    // If the bit is set then there is no compression, just write the data to the output.
-                    output[destPos] = stream.ReadByte();
-                    destPos++;
-                }
-                else
-                {
-                    // If the bit is not set, then the data needs to be decompressed. The next two bytes tells the data location and size.
-                    // The decompressed data has already been written to the output stream, so we go and retrieve it.
-                    byte byte1 = stream.ReadByte();
-                    byte byte2 = stream.ReadByte();
-
-                    int dist = ((byte1 & 0xF) << 8) | byte2;
-                    int copySource = destPos - (dist + 1);
-
-                    int numBytes = byte1 >> 4;
-                    if (numBytes == 0)
+                    // Read the configuration byte of a decompression setting group, and go through each bit of it.
+                    byte groupConfig = reader.ReadByte();
+                    for (int i = 7; i >= 0; i--)
                     {
-                        // Read the third byte which tells you how much data to read.
-                        numBytes = stream.ReadByte() + 0x12;
-                    }
-                    else
-                    {
-                        numBytes += 2;
-                    }
-
-                    // Copy Run
-                    for (int k = 0; k < numBytes; k++)
-                    {
-                        output[destPos] = output[copySource];
-                        copySource++;
-                        destPos++;
+                        // Check if bit of the current chunk is set.
+                        if ((groupConfig & (1 << i)) == (1 << i))
+                        {
+                            // Bit is set, copy 1 raw byte to the output.
+                            writer.Write(reader.ReadByte());
+                            decompressedBytes++;
+                        }
+                        else if (decompressedBytes < decompressedSize) // This does not make sense for last byte.
+                        {
+                            // Bit is not set and data copying configuration follows, either 2 or 3 bytes long.
+                            ushort dataBackSeekOffset = reader.ReadUInt16();
+                            int dataSize;
+                            // If the nibble of the first back seek offset byte is 0, the config is 3 bytes long.
+                            byte nibble = (byte)(dataBackSeekOffset >> 12/*1 byte (8 bits) + 1 nibble (4 bits)*/);
+                            if (nibble == 0)
+                            {
+                                // Nibble is 0, the number of bytes to read is in third byte, which is (size + 0x12).
+                                dataSize = reader.ReadByte() + 0x12;
+                            }
+                            else
+                            {
+                                // Nibble is not 0, and determines (size + 0x02) of bytes to read.
+                                dataSize = nibble + 0x02;
+                                // Remaining bits are the real back seek offset.
+                                dataBackSeekOffset &= 0x0FFF;
+                            }
+                            // Since bytes can be reread right after they were written, write and read bytes one by one.
+                            for (int j = 0; j < dataSize; j++)
+                            {
+                                // Read one byte from the current back seek position.
+                                writer.BaseStream.Position -= dataBackSeekOffset + 1;
+                                byte readByte = (byte)writer.BaseStream.ReadByte();
+                                // Write the byte to the end of the memory stream.
+                                writer.Seek(0, SeekOrigin.End);
+                                writer.Write(readByte);
+                                decompressedBytes++;
+                            }
+                        }
                     }
                 }
-
-                // Use the next bit from the code byte
-                curCodeByte <<= 1;
-                validBitCount -= 1;
             }
-
-            return new MemoryStream(output);
         }
     }
 }
