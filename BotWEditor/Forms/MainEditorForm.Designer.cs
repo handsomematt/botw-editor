@@ -35,6 +35,7 @@
             this.issueTrackerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editorMainMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,11 +46,13 @@
             this.helpToolStripMenuItem});
             this.editorMainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.editorMainMenuStrip.Name = "editorMainMenuStrip";
-            this.editorMainMenuStrip.Size = new System.Drawing.Size(1362, 24);
+            this.editorMainMenuStrip.Size = new System.Drawing.Size(1264, 24);
             this.editorMainMenuStrip.TabIndex = 0;
             // 
             // fileToolStripMenuItem
             // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -91,11 +94,18 @@
             this.aboutToolStripMenuItem.Text = "About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // MainEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1362, 680);
+            this.ClientSize = new System.Drawing.Size(1264, 681);
             this.Controls.Add(this.editorMainMenuStrip);
             this.MainMenuStrip = this.editorMainMenuStrip;
             this.Name = "MainEditorForm";
@@ -117,5 +127,6 @@
         private System.Windows.Forms.ToolStripMenuItem issueTrackerToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }

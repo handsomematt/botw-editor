@@ -88,12 +88,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BotWFormatReader\BotWFormatReader.csproj">
-      <Project>{61536358-b811-4f2f-b62d-6c67846eaf47}</Project>
-      <Name>BotWFormatReader</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
