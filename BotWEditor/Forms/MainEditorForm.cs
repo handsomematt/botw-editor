@@ -115,5 +115,21 @@ namespace BotWEditor.Forms
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void dungeonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "Pack files (*.pack)|*.pack|All files (*.*)|*.*";
+
+                if (ofd.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                using (var stream = ofd.OpenFile())
+                {
+
+                }
+            }
+        }
     }
 }

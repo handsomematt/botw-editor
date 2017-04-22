@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Editors\DungeonEditor.cs" />
     <Compile Include="Forms\Dialogs\AboutBoxForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,9 +89,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Editors\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\BotWLib\BotWLib.csproj">
       <Project>{86b73888-3194-47a5-b733-cfa002965956}</Project>

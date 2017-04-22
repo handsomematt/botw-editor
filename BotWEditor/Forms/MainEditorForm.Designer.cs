@@ -39,6 +39,9 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extractSARCArchiveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dungeonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.editorMainMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,6 +61,8 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.toolStripSeparator2,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(56, 34);
@@ -130,6 +135,26 @@
             this.extractSARCArchiveToolStripMenuItem.Text = "Extract SARC Archive...";
             this.extractSARCArchiveToolStripMenuItem.Click += new System.EventHandler(this.extractSARCArchiveToolStripMenuItem_Click);
             // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dungeonToolStripMenuItem});
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(239, 34);
+            this.openToolStripMenuItem.Text = "Open";
+            // 
+            // dungeonToolStripMenuItem
+            // 
+            this.dungeonToolStripMenuItem.Name = "dungeonToolStripMenuItem";
+            this.dungeonToolStripMenuItem.Size = new System.Drawing.Size(239, 34);
+            this.dungeonToolStripMenuItem.Text = "Dungeon";
+            this.dungeonToolStripMenuItem.Click += new System.EventHandler(this.dungeonToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(236, 6);
+            // 
             // MainEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
@@ -161,5 +186,8 @@
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem decompressYaz0ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem extractSARCArchiveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dungeonToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
