@@ -1,0 +1,3 @@
+[submodule "BotWLib"]
+	path = BotWLib
+	url = git@github.com:HandsomeMatt/botw-lib.git
