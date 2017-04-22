@@ -88,6 +88,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Editors\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BotWLib\BotWLib.csproj">
+      <Project>{86b73888-3194-47a5-b733-cfa002965956}</Project>
+      <Name>BotWLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

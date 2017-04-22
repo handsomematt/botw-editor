@@ -71,5 +71,49 @@ namespace BotWEditor.Forms
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void extractSARCArchiveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var ofd = new OpenFileDialog())
+                {
+                    if (ofd.ShowDialog(this) != DialogResult.OK)
+                        return;
+
+                    using (var stream = ofd.OpenFile())
+                    {
+                        var arch = new SARC(stream);
+
+                        using (var fbd = new FolderBrowserDialog())
+                        {
+                            fbd.SelectedPath = Path.GetDirectoryName(ofd.FileName);
+
+                            if (fbd.ShowDialog(this) != DialogResult.OK)
+                                return;
+
+                            var path = fbd.SelectedPath + Path.DirectorySeparatorChar;
+
+                            foreach (var node in arch.SfatNodes)
+                            {
+                                var fullPath = path + node.copied_name.Replace('/', Path.DirectorySeparatorChar);
+                                Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+                                using (var fileOutput = new FileStream(fullPath, FileMode.Create, FileAccess.Write))
+                                    fileOutput.Write(node.copied_data, 0, node.copied_data.Length);
+                            }
+
+                            // Open folder in Explorer
+                            Process.Start(fbd.SelectedPath);
+
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
