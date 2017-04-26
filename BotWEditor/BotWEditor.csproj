@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OpenTK">
+      <HintPath>..\ThirdParty\OpenTK\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK.GLControl">
+      <HintPath>..\ThirdParty\OpenTK.GLControl\OpenTK.GLControl.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,7 +52,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Editors\DungeonEditor.cs" />
+    <Compile Include="Editor\Common\BoundingBox.cs" />
+    <Compile Include="Editor\Common\Display.cs" />
+    <Compile Include="Editor\Common\Input.cs" />
+    <Compile Include="Editor\Common\MathExtensions.cs" />
+    <Compile Include="Editor\Common\Ray.cs" />
+    <Compile Include="Editor\Common\Rect.cs" />
+    <Compile Include="Editor\Common\Time.cs" />
+    <Compile Include="Editor\Components\BaseComponent.cs" />
+    <Compile Include="Editor\Components\Camera.cs" />
+    <Compile Include="Editor\Components\EditorObject.cs" />
+    <Compile Include="Editor\Components\FPSCameraMovement.cs" />
+    <Compile Include="Editor\Components\Renderable.cs" />
+    <Compile Include="Editor\Components\Transform.cs" />
+    <Compile Include="Editor\EditorCore.cs" />
     <Compile Include="Forms\Dialogs\AboutBoxForm.cs">
       <SubType>Form</SubType>
     </Compile>

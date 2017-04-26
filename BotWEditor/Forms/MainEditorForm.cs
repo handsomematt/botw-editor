@@ -1,17 +1,53 @@
-﻿using BotWEditor.Forms.Dialogs;
+﻿using BotWEditor.Editor;
+using BotWEditor.Forms.Dialogs;
 using BotWLib.Formats;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
+using OpenTK.Graphics.OpenGL;
+
 namespace BotWEditor.Forms
 {
     public partial class MainEditorForm : Form
     {
+        EditorCore MainEditorCore;
+
+        public static MainEditorForm Instance;
+
         public MainEditorForm()
         {
+            Instance = this;
             InitializeComponent();
+
+            glControl.Resize += Display.Internal_EventResize;
+
+            glControl.Load += (sender, args) =>
+            {
+                Application.Idle += HandleApplicationIdle;
+
+                MainEditorCore = new EditorCore(this);
+            };
+
+            glControl.Paint += (sender, args) => RenderFrame();
+        }
+
+        private void HandleApplicationIdle(object sender, EventArgs e)
+        {
+            while (glControl.IsIdle)
+                RenderFrame();
+        }
+
+        void RenderFrame()
+        {
+            GL.ClearColor(System.Drawing.Color.GreenYellow);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            if (MainEditorCore != null)
+                MainEditorCore.ProcessFrame();
+
+            glControl.SwapBuffers();
         }
 
         private void documentationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -121,6 +157,43 @@ namespace BotWEditor.Forms
             using (var ofd = new OpenFileDialog())
             {
                 ofd.Filter = "Pack files (*.pack)|*.pack|All files (*.*)|*.*";
+
+                if (ofd.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                using (var stream = ofd.OpenFile())
+                {
+                    //MainEditor = new DungeonEditor(this);
+                    //MainEditor.LoadFromStream(stream);
+
+                    
+                }
+            }
+        }
+
+        private void testBFRESToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "BFRES files (*.bfres)|*.bfres|All files (*.*)|*.*";
+
+                if (ofd.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                using (var stream = ofd.OpenFile())
+                {
+                    BFRES file = new BFRES(stream);
+                    file.ToString();
+
+                }
+            }
+        }
+
+        private void terrainToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "Master terrain file (*.tscb)|*.tscb|All files (*.*)|*.*";
 
                 if (ofd.ShowDialog(this) != DialogResult.OK)
                     return;
