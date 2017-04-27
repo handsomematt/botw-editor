@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotWEditor", "BotWEditor\Bo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotWLib", "BotWLib\BotWLib.csproj", "{86B73888-3194-47A5-B733-CFA002965956}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerrainTest", "TerrainTest\TerrainTest.csproj", "{23360272-CC88-4B7A-B34C-C39E69BCB881}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotWWorldViewer", "BotWWorldViewer\BotWWorldViewer.csproj", "{498E2A9D-973F-4AE1-A77C-B0316A8DC1DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{86B73888-3194-47A5-B733-CFA002965956}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86B73888-3194-47A5-B733-CFA002965956}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86B73888-3194-47A5-B733-CFA002965956}.Release|Any CPU.Build.0 = Release|Any CPU
-		{23360272-CC88-4B7A-B34C-C39E69BCB881}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{23360272-CC88-4B7A-B34C-C39E69BCB881}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{23360272-CC88-4B7A-B34C-C39E69BCB881}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{23360272-CC88-4B7A-B34C-C39E69BCB881}.Release|Any CPU.Build.0 = Release|Any CPU
+		{498E2A9D-973F-4AE1-A77C-B0316A8DC1DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{498E2A9D-973F-4AE1-A77C-B0316A8DC1DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{498E2A9D-973F-4AE1-A77C-B0316A8DC1DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{498E2A9D-973F-4AE1-A77C-B0316A8DC1DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
