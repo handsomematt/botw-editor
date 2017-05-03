@@ -16,6 +16,14 @@ namespace BotWWorldViewer.Resource
             }
         }
 
+        public static List<Archive> LoadedArchives
+        {
+            get
+            {
+                return loadedArchives;
+            }
+        }
+
         public static void LoadArchive(String filePath)
         {
             var archive = Archive.Load(filePath);

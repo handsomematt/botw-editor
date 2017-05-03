@@ -100,11 +100,7 @@ namespace BotWWorldViewer.Resource
 
             if (header[0] == 'Y')
             {
-                archiveFileStream = new MemoryStream();
-                Yaz0.Decompress(stream, (MemoryStream)archiveFileStream); // need to do something better then this whacky shit, need a just in time reader
-                stream.Close();
-                stream.Dispose();
-                stream = null;
+                archiveFileStream = new Yaz0Stream(stream);
             }
             else
             {
@@ -126,8 +122,8 @@ namespace BotWWorldViewer.Resource
                 for (int i = 0; i < sfatHeader.NodeCount; i++)
                 {
                     // These strings are aligned to 4 bytes.
-                    while (er.PeekReadByte() == 0)
-                        er.ReadByte();
+                    //while (er.PeekReadByte() == 0)
+                    //    er.ReadByte();
 
                     sfatStringTable[i] = Encoding.ASCII.GetString(er.ReadBytesUntil(0));
                 }

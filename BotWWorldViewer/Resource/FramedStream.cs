@@ -18,8 +18,6 @@ namespace BotWWorldViewer.Resource
 
             this.framedOffset = startPosition;
             this.framedSize = size;
-
-            Position = 0;
         }
 
         public override bool CanRead
