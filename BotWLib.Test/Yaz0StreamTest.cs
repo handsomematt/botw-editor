@@ -28,5 +28,68 @@ namespace BotWLib.Tests
             var bufferHash = BitConverter.ToString(MD5.Create().ComputeHash(buffer));
             Assert.AreEqual(bufferHash, md5Hashes["580000C000.hght.stera"]);
         }
+
+        [Test]
+        public void RandomSeeking()
+        {
+            var filePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\TestData\\580000C000.hght.sstera";
+            var stream = new Yaz0Stream(new FileStream(filePath, FileMode.Open, FileAccess.Read));
+
+            stream.Seek(0, SeekOrigin.Begin);
+            Assert.AreEqual(0x53, stream.ReadByte());
+            Assert.AreEqual(0x41, stream.ReadByte());
+            Assert.AreEqual(0x52, stream.ReadByte());
+            Assert.AreEqual(0x43, stream.ReadByte());
+
+            stream.Seek(20, SeekOrigin.Begin);
+            Assert.AreEqual(0x53, stream.ReadByte());
+            Assert.AreEqual(0x46, stream.ReadByte());
+            Assert.AreEqual(0x41, stream.ReadByte());
+            Assert.AreEqual(0x54, stream.ReadByte());
+
+            stream.Seek(16, SeekOrigin.Begin);
+            stream.Seek(4, SeekOrigin.Current);
+            Assert.AreEqual(0x53, stream.ReadByte());
+            Assert.AreEqual(0x46, stream.ReadByte());
+            Assert.AreEqual(0x41, stream.ReadByte());
+            Assert.AreEqual(0x54, stream.ReadByte());
+
+            stream.Position = 20;
+            Assert.AreEqual(0x53, stream.ReadByte());
+            Assert.AreEqual(0x46, stream.ReadByte());
+            Assert.AreEqual(0x41, stream.ReadByte());
+            Assert.AreEqual(0x54, stream.ReadByte());
+
+            stream.Position = 0;
+            Assert.AreEqual(0x53, stream.ReadByte());
+            Assert.AreEqual(0x41, stream.ReadByte());
+            Assert.AreEqual(0x52, stream.ReadByte());
+            Assert.AreEqual(0x43, stream.ReadByte());
+
+            stream.Position = 24;
+            stream.Seek(-4, SeekOrigin.Current);
+            Assert.AreEqual(0x53, stream.ReadByte());
+            Assert.AreEqual(0x46, stream.ReadByte());
+            Assert.AreEqual(0x41, stream.ReadByte());
+            Assert.AreEqual(0x54, stream.ReadByte());
+
+            stream.Seek(-4, SeekOrigin.Current);
+            Assert.AreEqual(0x53, stream.ReadByte());
+            Assert.AreEqual(0x46, stream.ReadByte());
+            Assert.AreEqual(0x41, stream.ReadByte());
+            Assert.AreEqual(0x54, stream.ReadByte());
+
+            stream.Seek(524452, SeekOrigin.Begin);
+            Assert.AreEqual(0xB8, stream.ReadByte());
+            Assert.AreEqual(0x27, stream.ReadByte());
+            Assert.AreEqual(0xB9, stream.ReadByte());
+            Assert.AreEqual(0x27, stream.ReadByte());
+
+            stream.Seek(-4, SeekOrigin.End);
+            Assert.AreEqual(0xB8, stream.ReadByte());
+            Assert.AreEqual(0x27, stream.ReadByte());
+            Assert.AreEqual(0xB9, stream.ReadByte());
+            Assert.AreEqual(0x27, stream.ReadByte());
+        }
     }
 }
