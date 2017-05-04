@@ -65,11 +65,11 @@ namespace BotWWorldViewer
             Mouse.ButtonDown += OnMouseButtonDown;
             Mouse.WheelChanged += OnMouseWheelChanged;
 
-            myCamera = new Camera(MathHelper.Pi / 3.0f, (float)Width / (float)Height, 1024.0f);
+            myCamera = new Camera(MathHelper.Pi / 3.0f, (float)Width / (float)Height, 32768.0f);
             myShader = new TerrainShader();
             myShader.Camera = myCamera;
 
-            var stream = ResourceManager.ReadFile("5100000002.hght");
+            var stream = ResourceManager.ReadFile("5000000000.hght");
             byte[] buffer = new byte[stream.Length];
             stream.Read(buffer, 0, buffer.Length);
 
@@ -119,7 +119,7 @@ namespace BotWWorldViewer
                 movement.Normalize();
                 myCamera.Position = myCamera.Position + movement * CameraMoveSpeed * (float)e.Time
                     * (Keyboard[Key.ShiftLeft] ? 4.0f : 1.0f)
-                    * 1024.0f / 512.0f;
+                    * 32768.0f / 512.0f;
             }
 
             //ResourceManager.CheckGLDisposals();

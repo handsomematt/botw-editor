@@ -38,7 +38,7 @@ namespace BotWWorldViewer
             if (VertexBuffer == null || !VertexBuffer.DataSet)
                 return;
             
-            GL.DrawElements(BeginMode.TriangleStrip, indices.Length * 3, DrawElementsType.UnsignedShort, 0);
+            GL.DrawElements(BeginMode.LineStrip, indices.Length / 3, DrawElementsType.UnsignedShort, 0);
         }
 
         public void SetupVertexBuffer()
@@ -48,14 +48,13 @@ namespace BotWWorldViewer
 
             VertexBuffer = new VertexBuffer(3);
 
-            int vertIndex = 0;
             vertices = new float[Width * Length * 3];
             for (int x = 0; x < Width; x++)
                 for (int z = 0; z < Length; z++)
                 {
-                    vertices[vertIndex++] = x;
-                    vertices[vertIndex++] = heightMap.GetHeight(x, z) / 1000.0f;
-                    vertices[vertIndex++] = z;
+                    vertices[(x * 3 + z * 3 * Width)] = (x * 100.0f);
+                    vertices[(x * 3 + z * 3 * Width) + 1] = heightMap.GetHeight(x, z) / 10.0f;
+                    vertices[(x * 3 + z * 3 * Width) + 2] = (z * 100.0f);
                 }
 
             indices = new ushort[(Width - 1) * (Length - 1) * 6];
