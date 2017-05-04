@@ -60,6 +60,8 @@ namespace BotWEditor.Editor
             GL.Vertex2(0, 1);
             GL.End();
 
+
+
             foreach (var editorObject in _editorObjectList)
             {
                 var renderable = editorObject.GetComponent<Renderable>();

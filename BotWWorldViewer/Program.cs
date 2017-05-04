@@ -33,13 +33,6 @@ namespace BotWWorldViewer
                 Environment.Exit(1);
             }
 
-            FramedStream fileStream = ResourceManager.ReadFile("580000C000.hght");
-
-            Console.WriteLine("580000C000.hght is {0} bytes long, position is set to {1} ({2})", fileStream.Length, fileStream.Position, fileStream.GlobalPosition);
-
-            byte[] buffer = new byte[fileStream.Length];
-            fileStream.Read(buffer, 0, (int)fileStream.Length);
-
             ViewerWindow window = new ViewerWindow();
             window.Run();
             window.Dispose();
